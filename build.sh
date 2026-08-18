@@ -10,12 +10,12 @@ set -euo pipefail
 cd "$(dirname "$0")"
 COURSE_DIR="$(cd .. && pwd)"
 
-mkdir -p slides
+# PDFs live at the repo root so they are easy to browse on github.com
 echo "Copying decks..."
 while IFS=$'\t' read -r num unit title cite src; do
   [ -z "${num:-}" ] && continue
   if [ -f "$COURSE_DIR/$src" ]; then
-    cp "$COURSE_DIR/$src" "slides/$(basename "$src")"
+    cp "$COURSE_DIR/$src" "./$(basename "$src")"
   else
     echo "  MISSING: $src" >&2
   fi
@@ -97,7 +97,7 @@ while IFS=$'\t' read -r num unit title cite src; do
   elif [ "$open_list" -eq 0 ]; then
     echo "<ul>"; open_list=1
   fi
-  echo "<li><a class=\"row\" href=\"slides/$base\">"
+  echo "<li><a class=\"row\" href=\"$base\">"
   echo "  <span class=\"n\">$num</span>"
   echo "  <span class=\"t\"><b>$title</b><span>$cite</span></span>"
   echo "  <span class=\"pdf\">PDF</span></a></li>"
