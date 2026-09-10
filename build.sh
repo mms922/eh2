@@ -120,6 +120,10 @@ cat <<TAIL
 <ul><li><a class="row" href="Mock_Exam_A1.pdf">
   <span class="n">A1</span>
   <span class="t"><b>Prova A1 - simulado</b><span>Nunn; Feir, Gillezeau e Jones; Lowes e Montero; Larsen; Ottinger e Voigtl&auml;nder</span></span>
+  <span class="pdf">PDF</span></a></li>
+<li><a class="row" href="Mock_Exam_A1_Gabarito.pdf">
+  <span class="n">A1</span>
+  <span class="t"><b>Prova A1 - simulado: gabarito</b><span>Respostas e crit&eacute;rios de corre&ccedil;&atilde;o</span></span>
   <span class="pdf">PDF</span></a></li></ul>
 <footer>Last updated $STAMP</footer>
 </div>
