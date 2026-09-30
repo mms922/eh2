@@ -124,6 +124,18 @@ cat <<TAIL
 <li><a class="row" href="Mock_Exam_A1_Gabarito.pdf">
   <span class="n">A1</span>
   <span class="t"><b>Prova A1 - simulado: gabarito</b><span>Respostas e crit&eacute;rios de corre&ccedil;&atilde;o</span></span>
+  <span class="pdf">PDF</span></a></li>
+<li><a class="row" href="Prova_A1_2026-2_EN.pdf">
+  <span class="n">A1</span>
+  <span class="t"><b>Midterm exam (A1)</b><span>English version</span></span>
+  <span class="pdf">PDF</span></a></li>
+<li><a class="row" href="Prova_A1_2026-2.pdf">
+  <span class="n">A1</span>
+  <span class="t"><b>Prova A1</b><span>Vers&atilde;o em portugu&ecirc;s</span></span>
+  <span class="pdf">PDF</span></a></li>
+<li><a class="row" href="Prova_A1_2026-2_Gabarito.pdf">
+  <span class="n">A1</span>
+  <span class="t"><b>Prova A1: gabarito</b><span>Respostas e crit&eacute;rios de corre&ccedil;&atilde;o</span></span>
   <span class="pdf">PDF</span></a></li></ul>
 <footer>Last updated $STAMP</footer>
 </div>
