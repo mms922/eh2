@@ -115,7 +115,10 @@ done < decks.tsv
 
 cat <<TAIL
 <div class="unit">End of term</div>
-<ul><li class="tbd"><span class="n">26-29</span><span class="t">Student presentations</span></li></ul>
+<ul><li><a class="row" href="papers/">
+  <span class="n">26-29</span>
+  <span class="t"><b>Student presentations</b><span>The 25 papers to choose from, with PDFs</span></span>
+  <span class="pdf">LIST</span></a></li></ul>
 <div class="unit">Exams</div>
 <ul><li><a class="row" href="Mock_Exam_A1.pdf">
   <span class="n">A1</span>
