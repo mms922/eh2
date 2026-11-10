@@ -144,10 +144,15 @@ if [ -f student.tsv ] && [ -s student.tsv ]; then
       echo "<ul>"; open_list=1
       prev_day="$day"
     fi
-    echo "<li><a class=\"row\" href=\"$(basename "$src")\">"
+    base=$(basename "$src")
+    case "$base" in
+      *.pptx) format=PPTX ;;
+      *) format=PDF ;;
+    esac
+    echo "<li><a class=\"row\" href=\"$base\">"
     echo "  <span class=\"n\">$slot</span>"
     echo "  <span class=\"t\"><b>$title</b><span>$cite</span></span>"
-    echo "  <span class=\"pdf\">PDF</span></a></li>"
+    echo "  <span class=\"pdf\">$format</span></a></li>"
   done < student.tsv
   [ "$open_list" -eq 1 ] && echo "</ul>"
 fi
