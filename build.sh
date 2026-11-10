@@ -21,6 +21,20 @@ while IFS=$'\t' read -r num unit title cite src; do
   fi
 done < decks.tsv
 
+# Student presentation slides (optional).
+#   student.tsv columns:  day <TAB> slot <TAB> title <TAB> citation <TAB> source path
+if [ -f student.tsv ]; then
+  echo "Copying student slides..."
+  while IFS=$'\t' read -r day slot title cite src; do
+    [ -z "${day:-}" ] && continue
+    if [ -f "$COURSE_DIR/$src" ]; then
+      cp "$COURSE_DIR/$src" "./$(basename "$src")"
+    else
+      echo "  MISSING: $src" >&2
+    fi
+  done < student.tsv
+fi
+
 STAMP=$(date "+%d %b %Y")
 
 {
@@ -113,12 +127,32 @@ while IFS=$'\t' read -r num unit title cite src; do
 done < decks.tsv
 [ "$open_list" -eq 1 ] && echo "</ul>"
 
+echo "<div class=\"unit\">End of term</div>"
+echo "<ul><li><a class=\"row\" href=\"papers/\">"
+echo "  <span class=\"n\">26-29</span>"
+echo "  <span class=\"t\"><b>Student presentations</b><span>The 25 papers to choose from, with PDFs</span></span>"
+echo "  <span class=\"pdf\">LIST</span></a></li></ul>"
+
+if [ -f student.tsv ] && [ -s student.tsv ]; then
+  prev_day=""
+  open_list=0
+  while IFS=$'\t' read -r day slot title cite src; do
+    [ -z "${day:-}" ] && continue
+    if [ "$day" != "$prev_day" ]; then
+      [ "$open_list" -eq 1 ] && echo "</ul>"
+      echo "<div class=\"unit\">Student presentations &middot; $day</div>"
+      echo "<ul>"; open_list=1
+      prev_day="$day"
+    fi
+    echo "<li><a class=\"row\" href=\"$(basename "$src")\">"
+    echo "  <span class=\"n\">$slot</span>"
+    echo "  <span class=\"t\"><b>$title</b><span>$cite</span></span>"
+    echo "  <span class=\"pdf\">PDF</span></a></li>"
+  done < student.tsv
+  [ "$open_list" -eq 1 ] && echo "</ul>"
+fi
+
 cat <<TAIL
-<div class="unit">End of term</div>
-<ul><li><a class="row" href="papers/">
-  <span class="n">26-29</span>
-  <span class="t"><b>Student presentations</b><span>The 25 papers to choose from, with PDFs</span></span>
-  <span class="pdf">LIST</span></a></li></ul>
 <div class="unit">Exams</div>
 <ul><li><a class="row" href="Mock_Exam_A1.pdf">
   <span class="n">A1</span>
