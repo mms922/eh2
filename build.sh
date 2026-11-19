@@ -22,13 +22,16 @@ while IFS=$'\t' read -r num unit title cite src; do
 done < decks.tsv
 
 # Student presentation slides (optional).
-#   student.tsv columns:  day <TAB> slot <TAB> title <TAB> citation <TAB> source path
+#   student.tsv columns:  day <TAB> slot <TAB> title <TAB> citation <TAB> source path [<TAB> site folder]
+#   The optional sixth column puts the file in that folder of the site (e.g. 19-nov-morning).
 if [ -f student.tsv ]; then
   echo "Copying student slides..."
-  while IFS=$'\t' read -r day slot title cite src; do
+  while IFS=$'\t' read -r day slot title cite src dir; do
     [ -z "${day:-}" ] && continue
+    dest="."
+    [ -n "${dir:-}" ] && { dest="./$dir"; mkdir -p "$dest"; }
     if [ -f "$COURSE_DIR/$src" ]; then
-      cp "$COURSE_DIR/$src" "./$(basename "$src")"
+      cp "$COURSE_DIR/$src" "$dest/$(basename "$src")"
     else
       echo "  MISSING: $src" >&2
     fi
@@ -136,7 +139,7 @@ echo "  <span class=\"pdf\">LIST</span></a></li></ul>"
 if [ -f student.tsv ] && [ -s student.tsv ]; then
   prev_day=""
   open_list=0
-  while IFS=$'\t' read -r day slot title cite src; do
+  while IFS=$'\t' read -r day slot title cite src dir; do
     [ -z "${day:-}" ] && continue
     if [ "$day" != "$prev_day" ]; then
       [ "$open_list" -eq 1 ] && echo "</ul>"
@@ -145,6 +148,7 @@ if [ -f student.tsv ] && [ -s student.tsv ]; then
       prev_day="$day"
     fi
     base=$(basename "$src")
+    [ -n "${dir:-}" ] && base="$dir/$base"
     case "$base" in
       *.pptx) format=PPTX ;;
       *) format=PDF ;;
